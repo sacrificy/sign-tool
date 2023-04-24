@@ -16,7 +16,7 @@ const withTheme = (node: JSX.Element) => (
         <ConfigProvider
           theme={{
             token: {
-              borderRadius: 16,
+              borderRadius: 5,
             },
           }}
         >
