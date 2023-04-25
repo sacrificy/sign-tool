@@ -8,10 +8,11 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
   try {
+    const { address } = req.body;
     const params = {
       module: "contract",
       action: "getabi",
-      address: "0x00005ea00ac477b1030ce78506496e8c2de24bf5",
+      address: address,
       apikey: process.env.ETHERSCAN_KEY,
     };
     const response = await axios.get("https://api.etherscan.io/api", {
