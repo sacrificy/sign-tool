@@ -30,7 +30,8 @@ const items: MenuItem[] = [
   getItem("设置破签服务", "/", <SettingOutlined />, [
     getItem("设置GET破签", "/set/get"),
     getItem("设置POST破签", "/set/post"),
-    getItem("设置LIST破签", "/set/list"),
+    getItem("设置AddressList破签", "/set/addresslist"),
+    getItem("设置公售", "/set/public"),
   ]),
   getItem("测试破签服务", "/test", <BugOutlined />),
   getItem("发布破签服务", "/upload", <UploadOutlined />),
@@ -59,7 +60,7 @@ export default function GlobalLayout({
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["set"]}
+          defaultOpenKeys={["/"]}
           items={items}
           onClick={({ key }) => {
             // console.log(item);

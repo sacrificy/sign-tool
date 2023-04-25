@@ -18,15 +18,23 @@ const initialValues = {
   abi_string: "",
   method: "",
   drop_parameters: "",
-  request_url: "",
-  request_headers: "",
+  address_list: "",
   upcoming_phase_id: "",
   contract_mint_able: false,
-  use_proxy: false,
-  use_tls: false,
+  sort_pairs: false,
+  sort_leaves: false
 };
+// contract_address	string	是
+// abi_string	string	是
+// method	string	是
+// drop_parameters	[]string .eg(["phaseIndex", "quantity", ""])	是
+// address_list	[]string	是
+// upcoming_phase_id	int	是
+// contract_mint_able	bool（默认false）	否
+// sort_pairs	bool（默认false）	否
+// sort_leaves	bool (默认false)	否
 
-export default function SetGet() {
+export default function SetAddressList() {
   const [result, setResult] = useState<any>("");
   const [methodList, setmethodList] = useState<any>([]);
   const [form] = Form.useForm();
@@ -52,7 +60,7 @@ export default function SetGet() {
 
   const onFinish = async (values: any) => {
     const result = await axios.post("/api/set", {
-      type: "get",
+      type: "addresslist",
       param: values,
     });
     const data = result.data;
@@ -155,16 +163,8 @@ export default function SetGet() {
         </Form.Item>
 
         <Form.Item
-          label="request_url"
-          name="request_url"
-          // rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="request_headers"
-          name="request_headers"
+          label="address_list"
+          name="address_list"
           // rules={[{ required: true, message: "Please input your password!" }]}
         >
           <Input />
@@ -188,8 +188,8 @@ export default function SetGet() {
         </Form.Item>
 
         <Form.Item
-          label="use_proxy"
-          name="use_proxy"
+          label="sort_pairs"
+          name="sort_pairs"
           valuePropName="checked"
           // rules={[{ required: true, message: "Please input your password!" }]}
         >
@@ -197,8 +197,8 @@ export default function SetGet() {
         </Form.Item>
 
         <Form.Item
-          label="use_tls"
-          name="use_tls"
+          label="sort_leaves"
+          name="sort_leaves"
           valuePropName="checked"
           // rules={[{ required: true, message: "Please input your password!" }]}
         >

@@ -18,15 +18,11 @@ const initialValues = {
   abi_string: "",
   method: "",
   drop_parameters: "",
-  request_url: "",
-  request_headers: "",
   upcoming_phase_id: "",
-  contract_mint_able: false,
-  use_proxy: false,
-  use_tls: false,
+  contract_mint_able: false
 };
 
-export default function SetGet() {
+export default function SetPublic() {
   const [result, setResult] = useState<any>("");
   const [methodList, setmethodList] = useState<any>([]);
   const [form] = Form.useForm();
@@ -52,7 +48,7 @@ export default function SetGet() {
 
   const onFinish = async (values: any) => {
     const result = await axios.post("/api/set", {
-      type: "get",
+      type: "public",
       param: values,
     });
     const data = result.data;
@@ -155,22 +151,6 @@ export default function SetGet() {
         </Form.Item>
 
         <Form.Item
-          label="request_url"
-          name="request_url"
-          // rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="request_headers"
-          name="request_headers"
-          // rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
           label="upcoming_phase_id"
           name="upcoming_phase_id"
           // rules={[{ required: true, message: "Please input your password!" }]}
@@ -181,24 +161,6 @@ export default function SetGet() {
         <Form.Item
           label="contract_mint_able"
           name="contract_mint_able"
-          valuePropName="checked"
-          // rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Switch />
-        </Form.Item>
-
-        <Form.Item
-          label="use_proxy"
-          name="use_proxy"
-          valuePropName="checked"
-          // rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Switch />
-        </Form.Item>
-
-        <Form.Item
-          label="use_tls"
-          name="use_tls"
           valuePropName="checked"
           // rules={[{ required: true, message: "Please input your password!" }]}
         >

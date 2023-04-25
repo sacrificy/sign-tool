@@ -10,32 +10,71 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  console.log(req.body);
-  const { type, param = {} } = req.body;
-  const params = {
-    contract_address: param.contract_address,
-    abi_string: param.abi_string,
-    method: param.method,
-    drop_parameters: param.drop_parameters,
-    request_url: param.request_url,
-    // request_headers: param.request_headers,
-    upcoming_phase_id: param.upcoming_phase_id,
-    contract_mint_able: param.contract_mint_able,
-    use_proxy: param.use_proxy,
-    use_tls: param.use_tls,
-  };
-  const headers = {
-    "x-api-key": param["x-api-key"],
-  };
-  console.log(params);
-  console.log(headers);
-  const data = {
-    status: "success",
-  };
-  // const { data } = await axios.post(
-  //   "https://sig.lancet.pro/api/external/setGetRequest",params,
-  //   { headers: headers }
-  // );
-  console.log(data);
-  res.status(200).json(data);
+  try {
+    const { type, param = {} } = req.body;
+    let params: any = {};
+    if (type === "get") {
+      params = {
+        contract_address: param.contract_address,
+        abi_string: param.abi_string,
+        method: param.method,
+        drop_parameters: JSON.parse(param.drop_parameters),
+        request_url: param.request_url,
+        request_headers: param.request_headers,
+        upcoming_phase_id: param.upcoming_phase_id,
+        contract_mint_able: param.contract_mint_able,
+        use_proxy: param.use_proxy,
+        use_tls: param.use_tls,
+      };
+    }
+    if (type === "post") {
+      params = {
+        contract_address: param.contract_address,
+        abi_string: param.abi_string,
+        method: param.method,
+        drop_parameters: JSON.parse(param.drop_parameters),
+        request_url: param.request_url,
+        request_body: param.request_body,
+        request_headers: param.request_headers,
+        upcoming_phase_id: param.upcoming_phase_id,
+        contract_mint_able: param.contract_mint_able,
+        use_proxy: param.use_proxy,
+        use_tls: param.use_tls,
+      };
+    }
+    if (type === "addresslist") {
+      params = {
+        contract_address: param.contract_address,
+        abi_string: param.abi_string,
+        method: param.method,
+        drop_parameters: JSON.parse(param.drop_parameters),
+        address_list: param.address_list,
+        upcoming_phase_id: param.upcoming_phase_id,
+        contract_mint_able: param.contract_mint_able,
+        sort_pairs: param.sort_pairs,
+        sort_leaves: param.sort_leaves,
+      };
+    }
+    if (type === "public") {
+      params = {
+        contract_address: param.contract_address,
+        abi_string: param.abi_string,
+        method: param.method,
+        drop_parameters: JSON.parse(param.drop_parameters),
+        upcoming_phase_id: param.upcoming_phase_id,
+        contract_mint_able: param.contract_mint_able,
+      };
+    }
+    const headers = {
+      "x-api-key": param["x-api-key"],
+    };
+    const { data } = await axios.post(
+      "https://sig.lancet.pro/api/external/setGetRequest",
+      params,
+      { headers: headers }
+    );
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(200).json({ code: "-1", data: {}, msg: "request error" });
+  }
 }
