@@ -12,7 +12,12 @@ export default async function handler(
 ) {
   try {
     const { type, param = {} } = req.body;
+    const headers = {
+      "x-api-key": param["x-api-key"],
+    };
+    let url = "";
     let params: any = {};
+
     if (type === "get") {
       params = {
         contract_address: param.contract_address,
@@ -26,6 +31,7 @@ export default async function handler(
         use_proxy: param.use_proxy,
         use_tls: param.use_tls,
       };
+      url = "https://sig.lancet.pro/api/external/setGetRequest";
     }
     if (type === "post") {
       params = {
@@ -41,6 +47,7 @@ export default async function handler(
         use_proxy: param.use_proxy,
         use_tls: param.use_tls,
       };
+      url = "https://sig.lancet.pro/api/external/setPostRequest";
     }
     if (type === "addresslist") {
       params = {
@@ -54,6 +61,7 @@ export default async function handler(
         sort_pairs: param.sort_pairs,
         sort_leaves: param.sort_leaves,
       };
+      url = "https://sig.lancet.pro/api/external/setAddressList";
     }
     if (type === "public") {
       params = {
@@ -64,15 +72,9 @@ export default async function handler(
         upcoming_phase_id: param.upcoming_phase_id,
         contract_mint_able: param.contract_mint_able,
       };
+      url = "https://sig.lancet.pro/api/external/setPublic";
     }
-    const headers = {
-      "x-api-key": param["x-api-key"],
-    };
-    const { data } = await axios.post(
-      "https://sig.lancet.pro/api/external/setGetRequest",
-      params,
-      { headers: headers }
-    );
+    const { data } = await axios.post(url, params, { headers: headers });
     res.status(200).json(data);
   } catch (error) {
     res.status(200).json({ code: "-1", data: {}, msg: "request error" });
