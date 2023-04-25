@@ -43,3 +43,6 @@ yarn.lock
 pnpm-lock.yaml
 
 public/antd.min.css
+
+# env
+.env

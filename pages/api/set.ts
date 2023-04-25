@@ -18,7 +18,7 @@ export default async function handler(
     method: param.method,
     drop_parameters: param.drop_parameters,
     request_url: param.request_url,
-    request_headers: param.request_headers,
+    // request_headers: param.request_headers,
     upcoming_phase_id: param.upcoming_phase_id,
     contract_mint_able: param.contract_mint_able,
     use_proxy: param.use_proxy,
@@ -31,11 +31,11 @@ export default async function handler(
   console.log(headers);
   const data = {
     status: "success",
-  }
-  // const { data } = await axios.get(
-  //   "https://sig.lancet.pro/api/external/setGetRequest",
-  //   { params: params, headers: headers }
+  };
+  // const { data } = await axios.post(
+  //   "https://sig.lancet.pro/api/external/setGetRequest",params,
+  //   { headers: headers }
   // );
-  // console.log(data);
+  console.log(data);
   res.status(200).json(data);
 }

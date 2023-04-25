@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Button, Switch, Form, Input } from "antd";
+import { Button, Switch, Form, Input, InputNumber, Space } from "antd";
+import { useContract } from "wagmi";
+import ethers from "ethers";
+// const FormatTypes = ethers.utils.FormatTypes;
 
 const initialValues = {
   "x-api-key": "",
@@ -18,6 +21,19 @@ const initialValues = {
 
 export default function SetGet() {
   const [result, setResult] = useState<any>("");
+  const [form] = Form.useForm();
+  const abi = Form.useWatch("abi_string", form);
+  const contract = useContract({
+    address: form.getFieldValue("contract_address"),
+    abi: abi,
+  });
+  useEffect(() => {
+    if (contract) {
+      const iface = contract.interface
+      // iface.format("sighash")
+      // console.log(iface.format("sighash"));
+    }
+  }, [contract]);
 
   const onFinish = async (values: any) => {
     // console.log("Success:", values);
@@ -28,21 +44,32 @@ export default function SetGet() {
     console.log(result);
     setResult(result);
   };
-  
+
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
+  };
+
+  const onClickGetABI = async () => {
+    const address = form.getFieldValue("contract_address");
+    const result = await axios.post("/api/getabi", { address: address });
+    form.setFieldValue("abi_string", result.data.result);
+    console.log(result);
   };
 
   return (
     <>
       <Form
         name="basic"
+        form={form}
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         style={{ width: "100%", maxWidth: 900 }}
         initialValues={initialValues}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
+        onFieldsChange={(a: any, b: any) => {
+          console.log(a, b);
+        }}
         autoComplete="off"
       >
         <Form.Item
@@ -52,12 +79,20 @@ export default function SetGet() {
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          label="contract_address"
-          name="contract_address"
-          // rules={[{ required: true, message: "Please input your username!" }]}
-        >
-          <Input />
+
+        <Form.Item label="contract_address">
+          <div style={{ display: "flex" }}>
+            <Form.Item name="contract_address" noStyle>
+              <Input />
+            </Form.Item>
+            <Button
+              type="primary"
+              style={{ marginLeft: 8 }}
+              onClick={onClickGetABI}
+            >
+              获取ABI
+            </Button>
+          </div>
         </Form.Item>
 
         <Form.Item
@@ -105,7 +140,7 @@ export default function SetGet() {
           name="upcoming_phase_id"
           // rules={[{ required: true, message: "Please input your password!" }]}
         >
-          <Input />
+          <InputNumber />
         </Form.Item>
 
         <Form.Item
@@ -141,7 +176,6 @@ export default function SetGet() {
           </Button>
         </Form.Item>
       </Form>
-      <div>{result.toString()}</div>
     </>
   );
 }
