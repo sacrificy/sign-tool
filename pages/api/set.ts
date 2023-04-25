@@ -55,7 +55,7 @@ export default async function handler(
         abi_string: param.abi_string,
         method: param.method,
         drop_parameters: JSON.parse(param.drop_parameters),
-        address_list: param.address_list,
+        address_list: JSON.parse(param.address_list),
         upcoming_phase_id: param.upcoming_phase_id,
         contract_mint_able: param.contract_mint_able,
         sort_pairs: param.sort_pairs,
