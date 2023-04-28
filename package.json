@@ -32,6 +32,13 @@
     "axios": "^1.3.6",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
+    "react-json-view": "^1.21.3",
     "wagmi": "^0.12.12"
+  },
+  "overrides": {
+    "react-json-view": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
   }
 }

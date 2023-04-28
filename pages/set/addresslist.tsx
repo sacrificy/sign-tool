@@ -18,7 +18,7 @@ const initialValues = {
   abi_string: "",
   method: "",
   drop_parameters: "",
-  address_list: "",
+  wallet_list: "",
   upcoming_phase_id: "",
   contract_mint_able: false,
   sort_pairs: false,
@@ -163,8 +163,8 @@ export default function SetAddressList() {
         </Form.Item>
 
         <Form.Item
-          label="address_list"
-          name="address_list"
+          label="wallet_list"
+          name="wallet_list"
           // rules={[{ required: true, message: "Please input your password!" }]}
         >
           <Input />

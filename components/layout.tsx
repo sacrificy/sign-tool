@@ -78,6 +78,8 @@ export default function GlobalLayout({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              flexFlow: "row wrap",
+              alignContent: "center"
             }}
           >
             {children}
